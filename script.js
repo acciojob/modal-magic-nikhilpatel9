@@ -1,10 +1,18 @@
-//your JS code here. If required.
-const dialog = document.getElementById('myDialog');
+ const dialog  = document.getElementById('myDialog');
+    const openBtn = document.getElementById('openBtn');
 
-  document.getElementById('openBtn').addEventListener('click', () => {
-    dialog.showModal();   
-  });
+    openBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dialog.showModal();
+    });
 
-  document.getElementById('closeBtn').addEventListener('click', () => {
-    dialog.close();
-  });
+    // Close on clicks INSIDE the dialog (bubbles to document)
+    document.addEventListener('click', () => {
+      if (dialog.open) dialog.close();
+    });
+
+    // Close on BACKDROP clicks (these don't bubble to document)
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();  // backdrop target = dialog itself
+    });
+  </script>
